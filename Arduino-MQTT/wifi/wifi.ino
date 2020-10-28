@@ -1,73 +1,55 @@
-#ifdef ARDUINO_ARCH_ESP32
-#include <WiFi.h>
-#include <WiFiMulti.h>
-WiFiMulti wifiMulti;
-#else
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiMulti.h>
-ESP8266WiFiMulti wifiMulti;
-#endif
 
+#include <WiFi.h>
 #include <MQTT.h>
 
-const char ssid1[] = "RED-111";
-const char pass1[] = "74241767ab";
-const char ssid2[] = "ALSW2";
-const char pass2[] = "7210-3607";
+const char ssid[] = "RED-111";
+const char pass[] = "74241767ab";
 
 WiFiClient net;
 MQTTClient client;
 
 unsigned long lastMillis = 0;
-int Led = 5;
-
-void Conectar() {
-  Serial.print("Conectando a Wifi...");
-  while (wifiMulti.run() != WL_CONNECTED) {
-    Serial.print(".");
-    delay(1000);
-  }
-  Serial.print("\nConectado a MQTT...");
-
-  while (!client.connect("FullIOTNeurona", "joseluis5034", "robotica2020")) {
+int led = 5;
+void connect() {
+  Serial.print("checking wifi...");
+  while (WiFi.status() != WL_CONNECTED) {
     Serial.print(".");
     delay(1000);
   }
 
-  Serial.println("\nConectado MQTT!");
+  Serial.print("\nconnecting...");
+  while (!client.connect("joseluis5034", "robotica2020")) {
+    Serial.print(".");
+    delay(1000);
+  }
+
+  Serial.println("\nconnected!");
 
   client.subscribe("/Proyecto/CLASIFICAR");
+  // client.unsubscribe("/hello");
 }
 
-void RecibirMQTT(String &topic, String &payload) {
-  if (Serial.available()) {
-    char Letra = Serial.read();
-    if (Letra == 'M') {
-      digitalWrite(Led,1);
-    }
-    else if (Letra == 'N') {
-      digitalWrite(Led,1);
-      
-    }else if (Letra == 'L') {
-      digitalWrite(Led,0);
-    }
+void messageReceived(String &topic, String &payload) {
+  Serial.println("incoming: " + topic + " - " + payload);
+if (payload == "MANZANA") {
+    Serial.println("Manzana");
+    digitalWrite(led,1);
+  } else if (payload == "NADA") {
+    Serial.println("Nada");
+    digitalWrite(led,0);
   }
 }
 
 void setup() {
   Serial.begin(115200);
-  pinMode(Led, OUTPUT);
-  digitalWrite(Led, 1);
+  pinMode(led, OUTPUT);
+  digitalWrite(led,0);
   Serial.println("Iniciando Wifi");
-  WiFi.mode(WIFI_STA);//Cambiar modo del Wi-Fi
-  delay(100);
-  wifiMulti.addAP(ssid1, pass1);
-  wifiMulti.addAP(ssid2, pass2);
-
+  WiFi.begin("RED-111", "74241767ab");
   client.begin("broker.shiftr.io", net);
-  client.onMessage(RecibirMQTT);
+  client.onMessage(messageReceived);
 
-  Conectar();
+  connect();
 }
 
 void loop() {
@@ -75,6 +57,6 @@ void loop() {
   delay(10);
 
   if (!client.connected()) {
-    Conectar();
+    connect();
   }
 }
