@@ -26,7 +26,7 @@ void connect() {
   Serial.println("\nconnected!");
 
   client.subscribe("/Proyecto/CLASIFICAR");
-  // client.unsubscribe("/hello");
+  // client.unsubscribe("hello");
 }
 
 void messageReceived(String &topic, String &payload) {
