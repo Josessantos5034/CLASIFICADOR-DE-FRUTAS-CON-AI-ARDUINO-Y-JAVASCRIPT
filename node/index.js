@@ -7,7 +7,7 @@ let ContrasenaMQTT = "robotica2020";
 
 const SerialPort = require('serialport');
 const port = new SerialPort("COM3", {
-  baudRate: 9600
+  baudRate: 921600
 })
 
 let Opciones = {
