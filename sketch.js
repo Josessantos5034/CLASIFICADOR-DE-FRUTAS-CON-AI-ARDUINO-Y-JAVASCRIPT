@@ -79,7 +79,7 @@ function draw() {
   image(Camara, 0, 0, width, height);
 
   if (knn.getNumLabels() > 0 && !Clasificando) {
-    setInterval(clasificar, 500);
+    setInterval(clasificar, 2000);
     Clasificando = true;
   }
 
