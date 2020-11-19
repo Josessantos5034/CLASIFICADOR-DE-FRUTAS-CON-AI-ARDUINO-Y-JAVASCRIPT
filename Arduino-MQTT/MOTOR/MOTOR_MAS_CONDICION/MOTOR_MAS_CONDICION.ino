@@ -8,7 +8,9 @@ int GradoDeseado = 0;
 const int P_Step = 19;
 const int P_Dir = 18;
 const int led_estado = 5;
-
+const int led_pera = 3;
+const int led_naranja = 2;
+const int led_manzana = 6;
 void setup() {
   pinMode(P_Step, OUTPUT);
   pinMode(P_Dir, OUTPUT);
@@ -58,36 +60,36 @@ void DetectarMensaje() {
     if (Letra == 'M') {
       GradoDeseado = posicion_manzana;
       Serial.println("Cambiando a Manzana");
-      digitalWrite(P_Dir, HIGH);    
-      for (int i = 0; i < posicion_manzana ; i++) {   
-        digitalWrite(P_Step, HIGH);       
-        delay(10);         
-        digitalWrite(P_Step, LOW);        
-        delay(10);          
+      digitalWrite(P_Dir, HIGH);
+      for (int i = 0; i < posicion_manzana ; i++) {
+        digitalWrite(P_Step, HIGH);
+        delay(10);
+        digitalWrite(P_Step, LOW);
+        delay(10);
       }
-      delay(2000);          
+      delay(2000);
     } else if (Letra == 'J') {
       GradoDeseado = posicion_naranja;
       Serial.println("Cambiando a Naranja");
-      digitalWrite(P_Dir, HIGH);    
-      for (int i = 0; i < posicion_naranja ; i++) {   
-        digitalWrite(P_Step, HIGH);       
-        delay(10);          
+      digitalWrite(P_Dir, HIGH);
+      for (int i = 0; i < posicion_naranja ; i++) {
+        digitalWrite(P_Step, HIGH);
+        delay(10);
         digitalWrite(P_Step, LOW);        
-        delay(10);          
+        delay(10);
       }
-      delay(2000);          
+      delay(2000);
     } else if (Letra == 'P') {
       GradoDeseado = posicion_pera;
       Serial.println("Cambiando a Pera");
-      digitalWrite(P_Dir, HIGH);    
-      for (int i = 0; i < posicion_pera ; i++) {   
-        digitalWrite(P_Step, HIGH);       
-        delay(10);          
-        digitalWrite(P_Step, LOW);        
-        delay(10);          
+      digitalWrite(P_Dir, HIGH);
+      for (int i = 0; i < posicion_pera ; i++) {
+        digitalWrite(P_Step, HIGH);
+        delay(10);
+        digitalWrite(P_Step, LOW);
+        delay(10);
       }
-      delay(2000);          
+      delay(2000);
     }
     digitalWrite(led_estado, 1);
   }
