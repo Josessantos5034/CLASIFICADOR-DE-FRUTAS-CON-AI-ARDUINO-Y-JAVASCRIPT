@@ -37,8 +37,5 @@ client.on('message', function(topic, message) {
   }else if (Mensaje == "PERA") {
     console.log("pera")
     port.write("P");
-  }else if (Mensaje == "NADA") {
-    console.log("nada")
-    port.write("N");
   }
 })
