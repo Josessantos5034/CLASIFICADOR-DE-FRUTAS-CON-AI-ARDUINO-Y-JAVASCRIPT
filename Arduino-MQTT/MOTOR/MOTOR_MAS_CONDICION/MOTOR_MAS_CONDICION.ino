@@ -11,6 +11,7 @@ const int led_estado = 5;
 const int led_pera = 3;
 const int led_naranja = 2;
 const int led_manzana = 6;
+
 void setup() {
   pinMode(P_Step, OUTPUT);
   pinMode(P_Dir, OUTPUT);
@@ -75,7 +76,7 @@ void DetectarMensaje() {
       for (int i = 0; i < posicion_naranja ; i++) {
         digitalWrite(P_Step, HIGH);
         delay(10);
-        digitalWrite(P_Step, LOW);        
+        digitalWrite(P_Step, LOW);
         delay(10);
       }
       delay(2000);
