@@ -7,10 +7,10 @@ int GradoDeseado = 0;
 
 const int P_Step = 19;
 const int P_Dir = 18;
-const int led_estado = 5;
-const int led_pera = 3;
-const int led_naranja = 2;
-const int led_manzana = 6;
+const int led_estado = 27;
+const int led_pera = 13;
+const int led_naranja = 12;
+const int led_manzana = 14;
 
 void setup() {
   pinMode(P_Step, OUTPUT);
