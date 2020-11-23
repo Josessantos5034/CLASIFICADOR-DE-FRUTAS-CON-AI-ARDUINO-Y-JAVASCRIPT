@@ -5,8 +5,8 @@
 int GradoActual = 0;
 int GradoDeseado = 0;
 
-const int boton1 = 16;
-const int boton2 = 17;
+const int BotonIzquierda = 16;
+const int BotonDerecha = 17;
 
 const int P_Step = 19;
 const int P_Dir = 18;
@@ -15,8 +15,6 @@ const int led_pera = 12;
 const int led_naranja = 14;
 const int led_manzana = 27;
 
-int botonEstado = 0;
-int boton2Estado = 0;
 
 void setup() {
   pinMode(P_Step, OUTPUT);
@@ -25,44 +23,55 @@ void setup() {
   pinMode(led_pera, OUTPUT);
   pinMode(led_naranja, OUTPUT);
   pinMode(led_manzana, OUTPUT);
-  pinMode(boton1, INPUT);
-  pinMode(boton2, INPUT);
+  pinMode(BotonIzquierda, INPUT);
+  pinMode(BotonDerecha, INPUT);
   Serial.begin(9600);
 }
 
 void loop() {
   DetectarMensaje();
   ActualizarPosicionMotores();
-  Leds();
+  ActualizarBotones();
 }
 
 void ActualizarPosicionMotores() {
-
   Serial.print(GradoActual);
   Serial.print("-");
   Serial.print(GradoDeseado);
   Serial.println();
   if (GradoActual < GradoDeseado) {
     SubirGrado();
-
   }
   else if ( GradoActual > GradoDeseado) {
     BajarGrado();
-
   }
-
 }
 
 void SubirGrado() {
   Serial.println("Moviendo Abajo");
   GradoActual++;
-
+  MoverMotor(1);
 }
 
 void BajarGrado() {
   Serial.println("Moviendo Abajo");
   GradoActual--;
+  MoverMotor(-1);
+}
 
+void MoverMotor(int Pasos) {
+  if (Pasos > 0) {
+    digitalWrite(P_Dir, HIGH);
+  } else {
+    digitalWrite(P_Dir, LOW);
+    Pasos = -Pasos;
+  }
+  for (int i = 0; i < Pasos; i++) {
+    digitalWrite(P_Step, HIGH);
+    delay(10);
+    digitalWrite(P_Step, LOW);
+    delay(10);
+  }
 }
 
 void DetectarMensaje() {
@@ -85,25 +94,17 @@ void DetectarMensaje() {
     }
   }
 }
-void Leds() {
-  botonEstado = digitalRead(boton1);
-  boton2Estado = digitalRead(boton2);
-
-  Serial.println(botonEstado);
-  Serial.println(boton2Estado);
-
-  if (botonEstado == HIGH) {
-    digitalWrite(led_estado, HIGH);
-    digitalWrite(led_pera, HIGH);
-  } else {
-    digitalWrite(led_estado, LOW);
-    digitalWrite(led_pera, LOW);
+void ActualizarBotones() {
+  if (digitalRead(BotonIzquierda)) {
+    Serial.println("Reiniciando hacia la izquierda");
+    MoverMotor(1);
+    GradoActual = 0;
+    GradoDeseado = 0;
   }
-  if (boton2Estado == HIGH) {
-    digitalWrite(led_naranja, HIGH);
-    digitalWrite(led_manzana, HIGH);
-  } else {
-    digitalWrite(led_naranja, LOW);
-    digitalWrite(led_manzana, LOW);
+  if (digitalRead(BotonDerecha)) {
+    Serial.println("Reiniciando hacia la derecha");
+    MoverMotor(-1);
+    GradoActual = 0;
+    GradoDeseado = 0;
   }
 }
