@@ -106,11 +106,17 @@ void ActualizarBotones() {
     MoverMotor(1);
     GradoActual = 0;
     GradoDeseado = 0;
+    digitalWrite(led_pera,LOW);
+    digitalWrite(led_naranja,LOW);
+    digitalWrite(led_manzana,LOW);
   }
   if (digitalRead(BotonDerecha)) {
     Serial.println("Reiniciando hacia la derecha");
     MoverMotor(-1);
     GradoActual = 0;
     GradoDeseado = 0;
+    digitalWrite(led_pera,LOW);
+    digitalWrite(led_naranja,LOW);
+    digitalWrite(led_manzana,LOW);
   }
 }
