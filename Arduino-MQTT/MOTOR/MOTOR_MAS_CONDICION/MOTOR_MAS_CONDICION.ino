@@ -81,16 +81,22 @@ void DetectarMensaje() {
     if (Letra == 'M') {
       GradoDeseado = posicion_manzana;
       Serial.println("Cambiando a Manzana");
-
+      digitalWrite(led_manzana,HIGH);
+      digitalWrite(led_pera,LOW);
+      digitalWrite(led_naranja,LOW);
     }
     else if (Letra == 'J') {
       GradoDeseado = posicion_naranja;
       Serial.println("Cambiando a Naranja");
-
+      digitalWrite(led_naranja,HIGH);
+      digitalWrite(led_pera,LOW);
+      digitalWrite(led_manzana,LOW);
     } else if (Letra == 'P') {
       GradoDeseado = posicion_pera;
       Serial.println("Cambiando a Pera");
-
+      digitalWrite(led_pera,HIGH);
+      digitalWrite(led_naranja,LOW);
+      digitalWrite(led_manzana,LOW);
     }
   }
 }
