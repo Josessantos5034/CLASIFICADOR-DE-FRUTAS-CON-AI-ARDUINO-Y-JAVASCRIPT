@@ -178,8 +178,8 @@ void ActualizarBotones() {
 }
 void RecibirMQTT(String &topic, String &payload) {
   Serial.println("Recivio: " + topic + " - " + payload);
-  if (payload == "Encender") {
-    Serial.println("Encender Foco");
+  if (payload == "Pera") {
+    Serial.println("");
     digitalWrite(Led, 0);
   } else if (payload == "Apagar") {
     Serial.println("Apagar Foco");
