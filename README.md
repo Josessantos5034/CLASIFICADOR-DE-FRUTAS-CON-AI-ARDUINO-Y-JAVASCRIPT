@@ -13,5 +13,17 @@ Construir un prototipo utilizando Inteligencia Artificial para la banda trasport
 <ul>
 <li> Demostrar el uso del Internet de las cosas e Inteligencia Artificial en proyectos utilizados en el diario vivir. </li>
 <li> Aplicar conceptos básicos en la manipulación de; actuadores, placas controladoras, drivers y sensores. </li>
-<li> Descubrir nuevas maneras de clasificar. </li>
+<li> Descubrir nuevas maneras de clasificar cosas en concreto frutas, utilizando nuevas tecnológicas. </li>
 </ul>
+
+## Componetes y materiales para elaborar el proyecto ## 
+<ul>
+  <li>Placa ESP32 Thing </li>
+  <li>Motor Nema 17</li>
+  <li>Driver A4988 o DRV8825</li>
+  <li>Cables del motor Nema</li>
+  <li>Cámara web</li>
+  <li><Leds/li>
+  <li>Resistencias de 330 ohm y 10k ohm</li>
+  <li>Pulsadores</li>
+<ul> 
