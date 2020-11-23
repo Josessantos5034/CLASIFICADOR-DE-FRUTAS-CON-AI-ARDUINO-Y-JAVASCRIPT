@@ -6,12 +6,12 @@ La investigación abarca distintos temas tales como; el internet de las cosas (O
 <p>  En cuanto a las plataformas que se basa esta investigación son las ya mencionadas, que dan la interfaz necesaria para poder desarrollar cualquier proyecto, hacer una unión entre el hardware, software y sin dejar del lado algo muy complejo, con referente a la Inteligencia Artificial como tal, que es una de las nuevas tecnológicas en esta área que puede ser muy útil, y ya que existen diferentes categorías puede funcionar para desarrollar para múltiples funciones o tareas a desempeñar con el tipo de proyecto. </p> <br>
 
 ##  Objetivos ## 
-<h4> Objetivos </h4>
 
-Objetivo general
+#### Objetivo general ####  
 Construir un prototipo utilizando Inteligencia Artificial para la banda trasportadora de frutas.
 
-Objetivos específicos
+####  Objetivos específicos ####  
+
 •	Demostrar el uso del Internet de las cosas e Inteligencia Artificial en proyectos utilizados en el diario vivir.
 •	Aplicar conceptos básicos en la manipulación de; actuadores, placas controladoras, drivers y sensores.
 •	Descubrir nuevas maneras de clasificar 
