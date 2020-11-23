@@ -5,24 +5,35 @@
 int GradoActual = 0;
 int GradoDeseado = 0;
 
+const int boton1 = 16;
+const int boton2 = 17;
+
 const int P_Step = 19;
 const int P_Dir = 18;
-const int led_estado = 27;
-const int led_pera = 13;
-const int led_naranja = 12;
-const int led_manzana = 14;
+const int led_estado = 13;
+const int led_pera = 12;
+const int led_naranja = 14;
+const int led_manzana = 27;
+
+int botonEstado = 0;
+int boton2Estado = 0;
 
 void setup() {
   pinMode(P_Step, OUTPUT);
   pinMode(P_Dir, OUTPUT);
   pinMode(led_estado, OUTPUT);
-  digitalWrite(led_estado, 1);
+  pinMode(led_pera, OUTPUT);
+  pinMode(led_naranja, OUTPUT);
+  pinMode(led_manzana, OUTPUT);
+  pinMode(boton1, INPUT);
+  pinMode(boton2, INPUT);
   Serial.begin(9600);
 }
 
 void loop() {
   DetectarMensaje();
   ActualizarPosicionMotores();
+  Leds();
 }
 
 void ActualizarPosicionMotores() {
@@ -61,37 +72,38 @@ void DetectarMensaje() {
     if (Letra == 'M') {
       GradoDeseado = posicion_manzana;
       Serial.println("Cambiando a Manzana");
-      digitalWrite(P_Dir, HIGH);
-      for (int i = 0; i < posicion_manzana ; i++) {
-        digitalWrite(P_Step, HIGH);
-        delay(10);
-        digitalWrite(P_Step, LOW);
-        delay(10);
-      }
-      delay(2000);
-    } else if (Letra == 'J') {
+
+    }
+    else if (Letra == 'J') {
       GradoDeseado = posicion_naranja;
       Serial.println("Cambiando a Naranja");
-      digitalWrite(P_Dir, HIGH);
-      for (int i = 0; i < posicion_naranja ; i++) {
-        digitalWrite(P_Step, HIGH);
-        delay(10);
-        digitalWrite(P_Step, LOW);
-        delay(10);
-      }
-      delay(2000);
+
     } else if (Letra == 'P') {
       GradoDeseado = posicion_pera;
       Serial.println("Cambiando a Pera");
-      digitalWrite(P_Dir, HIGH);
-      for (int i = 0; i < posicion_pera ; i++) {
-        digitalWrite(P_Step, HIGH);
-        delay(10);
-        digitalWrite(P_Step, LOW);
-        delay(10);
-      }
-      delay(2000);
+
     }
-    digitalWrite(led_estado, 1);
+  }
+}
+void Leds() {
+  botonEstado = digitalRead(boton1);
+  boton2Estado = digitalRead(boton2);
+
+  Serial.println(botonEstado);
+  Serial.println(boton2Estado);
+
+  if (botonEstado == HIGH) {
+    digitalWrite(led_estado, HIGH);
+    digitalWrite(led_pera, HIGH);
+  } else {
+    digitalWrite(led_estado, LOW);
+    digitalWrite(led_pera, LOW);
+  }
+  if (boton2Estado == HIGH) {
+    digitalWrite(led_naranja, HIGH);
+    digitalWrite(led_manzana, HIGH);
+  } else {
+    digitalWrite(led_naranja, LOW);
+    digitalWrite(led_manzana, LOW);
   }
 }
