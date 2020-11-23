@@ -22,7 +22,7 @@ Construir un prototipo utilizando Inteligencia Artificial para la banda trasport
   <li>Motor Nema 17</li>
   <li>Fuente reguladora de voltaje</li>
   <li>Driver A4988 o DRV8825</li>
-  ![alt text](/Imagenes/of/Drives-min.jpg "title")
+  ![alt text](CLASIFICADOR-DE-FRUTAS-CON-AI-ARDUINO-Y-JAVASCRIPT/Imagenes/Drives-min.jpg "title")
   <li>Cables del motor Nema</li>
   <li>Cámara web</li>
   <li>Breadboard</li>
