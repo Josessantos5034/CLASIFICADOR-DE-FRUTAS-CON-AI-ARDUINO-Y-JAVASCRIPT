@@ -10,8 +10,8 @@ La investigación abarca distintos temas tales como; el internet de las cosas (O
 Construir un prototipo utilizando Inteligencia Artificial para la banda trasportadora de frutas.
 
 ####  Objetivos específicos ####  
-<ol>
+<ul>
 <li> •	Demostrar el uso del Internet de las cosas e Inteligencia Artificial en proyectos utilizados en el diario vivir. </li>
 <li> •	Aplicar conceptos básicos en la manipulación de; actuadores, placas controladoras, drivers y sensores. </li>
 <li> •	Descubrir nuevas maneras de clasificar. </li>
-</ol>
+</ul>
