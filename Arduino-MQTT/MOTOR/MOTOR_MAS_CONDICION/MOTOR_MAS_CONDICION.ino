@@ -1,3 +1,43 @@
+
+#ifdef ARDUINO_ARCH_ESP32
+#include <WiFi.h>
+#include <WiFiMulti.h>
+WiFiMulti wifiMulti;
+#else
+#include <ESP8266WiFi.h>
+#include <ESP8266WiFiMulti.h>
+ESP8266WiFiMulti wifiMulti;
+#endif
+
+#include <MQTT.h>
+
+const char ssid1[] = "RED-111";
+const char pass1[] = "74241767ab";
+const char ssid2[] = "ALSW2";
+const char pass2[] = "7210-3607";
+const char ssid3[] = "ssid";
+const char pass3[] = "pass";
+
+WiFiClient net;
+MQTTClient client;
+
+void Conectar() {
+  Serial.print("Conectando a Wifi...");
+  while (wifiMulti.run() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(1000);
+  }
+  Serial.print("\nConectado a MQTT...");
+
+  while (!client.connect("Banda_transportadora", "joseluis5034", "robotica2020")) {
+    Serial.print(".");
+    delay(1000);
+  }
+
+  Serial.println("\nConectado MQTT!");
+
+  client.subscribe("/Proyecto/CLASIFICAR");
+}
 #define posicion_manzana 0
 #define posicion_naranja 120
 #define posicion_pera 240
@@ -26,9 +66,25 @@ void setup() {
   pinMode(BotonIzquierda, INPUT);
   pinMode(BotonDerecha, INPUT);
   Serial.begin(9600);
+  Serial.println("Iniciando Wifi");
+  WiFi.mode(WIFI_STA);
+  delay(100);
+  wifiMulti.addAP(ssid1, pass1);
+  wifiMulti.addAP(ssid2, pass2);
+  wifiMulti.addAP(ssid3, pass3);
+
+  client.begin("broker.shiftr.io", net);
+  client.onMessage(RecibirMQTT);
+
+  Conectar();
 }
 
 void loop() {
+  client.loop();
+  delay(10);
+  if (!client.connected()) {
+    Conectar();
+  }
   DetectarMensaje();
   ActualizarPosicionMotores();
   ActualizarBotones();
@@ -81,22 +137,22 @@ void DetectarMensaje() {
     if (Letra == 'M') {
       GradoDeseado = posicion_manzana;
       Serial.println("Cambiando a Manzana");
-      digitalWrite(led_manzana,HIGH);
-      digitalWrite(led_pera,LOW);
-      digitalWrite(led_naranja,LOW);
+      digitalWrite(led_manzana, HIGH);
+      digitalWrite(led_pera, LOW);
+      digitalWrite(led_naranja, LOW);
     }
     else if (Letra == 'J') {
       GradoDeseado = posicion_naranja;
       Serial.println("Cambiando a Naranja");
-      digitalWrite(led_naranja,HIGH);
-      digitalWrite(led_pera,LOW);
-      digitalWrite(led_manzana,LOW);
+      digitalWrite(led_naranja, HIGH);
+      digitalWrite(led_pera, LOW);
+      digitalWrite(led_manzana, LOW);
     } else if (Letra == 'P') {
       GradoDeseado = posicion_pera;
       Serial.println("Cambiando a Pera");
-      digitalWrite(led_pera,HIGH);
-      digitalWrite(led_naranja,LOW);
-      digitalWrite(led_manzana,LOW);
+      digitalWrite(led_pera, HIGH);
+      digitalWrite(led_naranja, LOW);
+      digitalWrite(led_manzana, LOW);
     }
   }
 }
@@ -106,17 +162,27 @@ void ActualizarBotones() {
     MoverMotor(1);
     GradoActual = 0;
     GradoDeseado = 0;
-    digitalWrite(led_pera,LOW);
-    digitalWrite(led_naranja,LOW);
-    digitalWrite(led_manzana,LOW);
+    digitalWrite(led_pera, LOW);
+    digitalWrite(led_naranja, LOW);
+    digitalWrite(led_manzana, LOW);
   }
   if (digitalRead(BotonDerecha)) {
     Serial.println("Reiniciando hacia la derecha");
     MoverMotor(-1);
     GradoActual = 0;
     GradoDeseado = 0;
-    digitalWrite(led_pera,LOW);
-    digitalWrite(led_naranja,LOW);
-    digitalWrite(led_manzana,LOW);
+    digitalWrite(led_pera, LOW);
+    digitalWrite(led_naranja, LOW);
+    digitalWrite(led_manzana, LOW);
+  }
+}
+void RecibirMQTT(String &topic, String &payload) {
+  Serial.println("Recivio: " + topic + " - " + payload);
+  if (payload == "Encender") {
+    Serial.println("Encender Foco");
+    digitalWrite(Led, 0);
+  } else if (payload == "Apagar") {
+    Serial.println("Apagar Foco");
+    digitalWrite(Led, 1);
   }
 }
