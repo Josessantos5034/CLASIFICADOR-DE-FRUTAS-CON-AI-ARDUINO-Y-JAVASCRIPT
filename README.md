@@ -19,10 +19,10 @@ Construir un prototipo utilizando Inteligencia Artificial para la banda trasport
 ## Componetes y materiales para elaborar el proyecto ## 
 <ul>
   <li>Placa ESP32 Thing </li>
-  ![Alt text](/Imagenes/Drives-min.jpg "a title")
   <li>Motor Nema 17</li>
   <li>Fuente reguladora de voltaje</li>
   <li>Driver A4988 o DRV8825</li>
+  ![alt text](/Imagenes/of/Drives-min.jpg "title")
   <li>Cables del motor Nema</li>
   <li>Cámara web</li>
   <li>Breadboard</li>
