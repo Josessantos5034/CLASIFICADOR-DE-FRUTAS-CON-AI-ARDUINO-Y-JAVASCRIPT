@@ -23,7 +23,7 @@ Construir un prototipo utilizando Inteligencia Artificial para la banda trasport
   <li>Driver A4988 o DRV8825</li>
   <li>Cables del motor Nema</li>
   <li>Cámara web</li>
-  <li><Leds/li>
+  <li><Leds </li>
   <li>Resistencias de 330 ohm y 10k ohm</li>
   <li>Pulsadores</li>
 <ul> 
