@@ -1,13 +1,10 @@
-// console.log('ml5 version:', ml5.version);
 var Camara;
+var RelacionCamara;
 var CartaMensaje;
-var BotonesEntrenar;
-var knn;
-var modelo;
 var Clasificando = false;
 var CargandoNeurona = false;
-var RelacionCamara;
-
+var knn;
+var modelo;
 let BrokerMQTT = 'broker.shiftr.io';
 let PuertoMQTT = 80;
 let ClienteIDMQTT = "MQTT-P5";
@@ -37,18 +34,16 @@ function MQTTMensaje(message){
 function ConectadoMQTT() {
   console.log("MQTT Conectado");
 }
-
 function setup() {
   var ObtenerCanva = document.getElementById('micanva');
+  var AnchoCanvas = ObtenerCanva.offsetWidth;
   CartaMensaje = document.getElementById('CartaMensaje');
   CartaMensaje.innerText = "Cargando APP...";
-  var AnchoCanvas = ObtenerCanva.offsetWidth;
-
   Camara = createCapture(VIDEO);
   // Camara.size(1280, 720);
   Camara.hide();
   RelacionCamara = Camara.height / Camara.width;
-  var AltoCanvas = (AnchoCanvas * RelacionCamara);
+  var AltoCanvas = AnchoCanvas * RelacionCamara;
   var sketchCanvas = createCanvas(AnchoCanvas, AltoCanvas);
   sketchCanvas.parent("micanva");
 
@@ -60,17 +55,19 @@ function setup() {
     BotonesEntrenar[B].mousePressed(PresionandoBoton);
   }
 
+  var TexBoxBoton = select("#TextBoxBoton");
+  TexBoxBoton.mousePressed(EntrenarTexBox);
+
+  var LimpiarBoton = select("#LimpiarBoton");
+  LimpiarBoton.mousePressed(LimpiarKnn);
+
   var SalvarBoton = select("#SalvarBoton");
   SalvarBoton.mousePressed(GuardadNeurona);
 
   var CargarBoton = select("#CargarBoton");
   CargarBoton.mousePressed(CargarNeurona);
 
-  var TexBoxBoton = select("#TextBoxBoton");
-  TexBoxBoton.mousePressed(EntrenarTexBox);
-
-  var LimpiarBoton = select("#LimpiarBoton");
-  LimpiarBoton.mousePressed(LimpiarKnn);
+  //CargarNeurona();
 }
 
 function draw() {
@@ -79,7 +76,8 @@ function draw() {
   image(Camara, 0, 0, width, height);
 
   if (knn.getNumLabels() > 0 && !Clasificando) {
-    setInterval(clasificar, 2000);
+    console.log("Empezar a clasificar");
+    setInterval(clasificar, 500);
     Clasificando = true;
   }
 
@@ -116,7 +114,6 @@ function EntrenarKnn(ObjetoEntrenar) {
   knn.addExample(Imagen, ObjetoEntrenar);
 }
 
-
 function clasificar() {
   if (Clasificando) {
     var Imagen = modelo.infer(Camara);
@@ -125,10 +122,7 @@ function clasificar() {
         console.log("Error en clasificar");
         console.error();
       } else {
-        message = new Paho.MQTT.Message(result.label);
-        message.destinationName = "Proyecto/CLASIFICAR";
-        client.send(message);
-        // console.log(result);
+        console.log(result);
         var Etiqueta;
         var Confianza;
         if (!CargandoNeurona) {
@@ -158,6 +152,16 @@ function EntrenarTexBox() {
   knn.addExample(Imagen, EtiquetaTextBox);
 }
 
+function LimpiarKnn() {
+  console.log("Borrando Neuroona");
+  if (Clasificando) {
+    Clasificando = false;
+    clearInterval(clasificar);
+    knn.clearAllLabels();
+    CartaMensaje.innerText = "Neurona Borrada";
+  }
+}
+
 function GuardadNeurona() {
   if (Clasificando) {
     console.log("Guardando la neurona");
@@ -169,17 +173,7 @@ function CargarNeurona() {
   console.log("Cargando una Neurona");
   knn.load("./data/NeuronaKNN.json", function() {
     console.log("Neurona Cargada knn");
-    CartaMensaje.innerText = "Neurona cargada de archivo";
+    CartaMensaje.innerText = "Neurona cargana de archivo";
     CargandoNeurona = true;
   });
-}
-
-function LimpiarKnn() {
-  console.log("Borrando Neurona");
-  if (Clasificando) {
-    Clasificando = false;
-    clearInterval(clasificar);
-    knn.clearAllLabels();
-    CartaMensaje.innerText = "Neurona Borrada";
-  }
 }
