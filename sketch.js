@@ -40,7 +40,6 @@ function setup() {
   CartaMensaje = document.getElementById('CartaMensaje');
   CartaMensaje.innerText = "Cargando APP...";
   Camara = createCapture(VIDEO);
-  // Camara.size(1280, 720);
   Camara.hide();
   RelacionCamara = Camara.height / Camara.width;
   var AltoCanvas = AnchoCanvas * RelacionCamara;
