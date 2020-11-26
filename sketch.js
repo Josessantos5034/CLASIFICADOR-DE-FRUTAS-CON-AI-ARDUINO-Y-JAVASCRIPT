@@ -121,7 +121,9 @@ function clasificar() {
         console.log("Error en clasificar");
         console.error();
       } else {
-        console.log(result);
+        message = new Paho.MQTT.Message(result.label);
+        message.destinationName = "Proyecto/CLASIFICAR";
+        client.send(message);
         var Etiqueta;
         var Confianza;
         if (!CargandoNeurona) {
