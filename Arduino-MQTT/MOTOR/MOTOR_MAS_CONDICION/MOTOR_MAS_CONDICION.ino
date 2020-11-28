@@ -191,4 +191,11 @@ void RecibirMQTT(String &topic, String &payload) {
     digitalWrite(led_naranja, LOW);
     digitalWrite(led_manzana, HIGH);
   }
+  else if (payload == "NARANJA") {
+   GradoDeseado = posicion_naranja;
+   Serial.println("Detecta_Naranja");
+   digitalWrite(led_pera, LOW);
+   digitalWrite(led_naranja, HIGH);
+   digitalWrite(led_manzana, LOW);
+ }
 }
