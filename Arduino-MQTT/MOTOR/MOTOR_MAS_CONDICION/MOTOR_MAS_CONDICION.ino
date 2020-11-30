@@ -12,8 +12,8 @@ ESP8266WiFiMulti wifiMulti;
 
 const char ssid1[] = "RED-111";
 const char pass1[] = "74241767ab";
-const char ssid2[] = "ALSW2";
-const char pass2[] = "7210-3607";
+const char ssid2[] = "TPS";
+const char pass2[] = "3DLAB2019";
 const char ssid3[] = "ssid";
 const char pass3[] = "pass";
 
@@ -70,7 +70,7 @@ void setup() {
   WiFi.mode(WIFI_STA);//Cambiar modo del Wi-Fi
   delay(100);
   wifiMulti.addAP("RED-111", "74241767ab");
-  wifiMulti.addAP(ssid2, pass2);
+  wifiMulti.addAP("TPS", "3DLAB2019");
   wifiMulti.addAP(ssid3, pass3);
 
   client.begin("broker.shiftr.io", net);
