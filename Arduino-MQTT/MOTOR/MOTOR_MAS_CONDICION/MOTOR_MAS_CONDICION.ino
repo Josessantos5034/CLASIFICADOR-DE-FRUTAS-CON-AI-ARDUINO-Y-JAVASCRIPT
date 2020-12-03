@@ -41,7 +41,6 @@ void Conectar() {
 #define posicion_mandarina 0
 #define posicion_uva_verde 120
 #define posicion_uva_roja 240
-posicion_uva_roja
 int GradoActual = 0;
 int GradoDeseado = 0;
 
@@ -85,7 +84,6 @@ void loop() {
   if (!client.connected()) {
    Conectar();
   }
-  DetectarMensaje();
   ActualizarPosicionMotores();
   ActualizarBotones();
 }
