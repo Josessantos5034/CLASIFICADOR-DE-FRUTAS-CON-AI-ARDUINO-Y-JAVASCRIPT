@@ -29,3 +29,4 @@ Construir un prototipo utilizando Inteligencia Artificial para la banda trasport
   <li>Resistencias de 330 ohm y 10k ohm</li>
   <li>Pulsadores</li>
 <ul> 
+PROBANDO
