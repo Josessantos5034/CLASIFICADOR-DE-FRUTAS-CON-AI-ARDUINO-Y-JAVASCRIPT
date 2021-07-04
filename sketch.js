@@ -5,21 +5,18 @@ var Clasificando = false;
 var CargandoNeurona = false;
 var knn;
 var modelo;
-let BrokerMQTT = 'broker.shiftr.io';
-let PuertoMQTT = 80;
-let ClienteIDMQTT = "MQTT-P5";
-let UsuarioMQTT = "joseluis5034";
-let ContrasenaMQTT = "robotica2020";
+var mqtt;
+var reconnectTimeout = 2000;
+var host="192.168.1.6";
+var port=9001;
+var client = new Paho.MQTT.Client(host,port,"BANDA");
 
-client = new Paho.MQTT.Client(BrokerMQTT, PuertoMQTT, ClienteIDMQTT);
 
 client.onConnectionLost = MQTTPerder;
 client.onMessageArrived = MQTTMensaje;
 
 client.connect({
-  onSuccess:ConectadoMQTT,
-  userName: UsuarioMQTT,
-  password: ContrasenaMQTT
+  onSuccess:ConectadoMQTT
 });
 
 function MQTTPerder(responseObject){
@@ -28,7 +25,7 @@ function MQTTPerder(responseObject){
   }
 }
 function MQTTMensaje(message){
-  console.log("Mesaje recibido: " + message.payloadString);
+  console.log("Mensaje recibido: " + message.payloadString);
 }
 
 function ConectadoMQTT() {
@@ -118,11 +115,12 @@ function clasificar() {
     var Imagen = modelo.infer(Camara);
     knn.classify(Imagen, function(error, result) {
       if (error) {
-        console.log("Error en clasificar");
+        console.log("Error en clasificar"+ error);
         console.error();
       } else {
+        client.subscribe("bandafrut");
         message = new Paho.MQTT.Message(result.label);
-        message.destinationName = "Proyecto/CLASIFICAR";
+        message.destinationName = "bandafrut";
         client.send(message);
         var Etiqueta;
         var Confianza;
